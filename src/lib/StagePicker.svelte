@@ -23,7 +23,7 @@
         .filter(([_, selected]) => selected === "picked")
         .map(([stageId, _]) => stageId),
       banned: selectedStages
-        .filter(([_, selected]) => selected === "banned")
+        .filter(([_, selected]) => selected === "bannedByP1" || selected === "bannedByP2")
         .map(([stageId, _]) => stageId),
     };
 
@@ -48,7 +48,10 @@
       !everySelectedStage.has(stageId) &&
       !selectedStagesThisTurn.has(stageId)
     ) {
-      selectedStagesThisTurn.set(stageId, turn.type === "pick" ? "picked" : "banned");
+      selectedStagesThisTurn.set(
+        stageId,
+        turn.type === "pick" ? "picked" : currentPlayer === 1 ? "bannedByP1" : "bannedByP2",
+      );
     } else if (selectedStagesThisTurn.has(stageId)) {
       selectedStagesThisTurn.delete(stageId);
     }

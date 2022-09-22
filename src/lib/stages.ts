@@ -3,7 +3,9 @@ export type StageData = {
   image: string;
 };
 
-export type StageSelected = "no" | "picked" | "banned";
+// Determines the colored overlay on a stage. There are two banned states so
+// you can tell which stages were banned by your opponent and yourself.
+export type StageSelected = "no" | "picked" | "bannedByP1" | "bannedByP2";
 
 export type StageId =
   | "bf"
@@ -46,5 +48,5 @@ export const GENTLEMAN_STAGES: Readonly<string[]> = [
 ];
 
 export const NORMAL_STAGES: Readonly<string[]> = Object.keys(LEGAL_STAGES_DATA).filter(
-  (stage) => !GENTLEMAN_STAGES.includes(stage),
+  stage => !GENTLEMAN_STAGES.includes(stage),
 );

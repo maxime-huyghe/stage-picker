@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Stage, { type StageAppearance } from "./Stage.svelte";
+  import Stage from "./Stage.svelte";
   import { LEGAL_STAGES_DATA, type StageSelected } from "./stages";
 
   export let stages: Readonly<string[]>;
