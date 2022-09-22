@@ -19,7 +19,7 @@ const config = {
     },
     adapter: adapter(),
     paths: {
-      // base: dev ? "" : "/stage-striker",
+      // base: dev ? "" : "/stage-picker",
     },
   },
 };

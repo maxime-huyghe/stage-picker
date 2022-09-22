@@ -1,7 +1,7 @@
 <script context="module" lang="ts">
   import { GENTLEMAN_STAGES } from "$lib/stages";
 
-  import type { AppState } from "$lib/striker";
+  import type { Picker } from "$lib/picker";
 
   import { DEFAULT_RULESET } from "$lib/types";
   import { appUrl } from "$lib/urls";
@@ -9,14 +9,14 @@
   import type { Load } from "./index";
 
   export const load: Load = () => {
-    const defaultState: AppState = {
+    const defaultState: Picker = {
       phases: [...DEFAULT_RULESET],
       gentlemanStages: [...GENTLEMAN_STAGES],
       matchResults: [],
     };
     return {
       status: 302,
-      redirect: appUrl(`striker/${base64Encode(JSON.stringify(defaultState))}`),
+      redirect: appUrl(`picker/${base64Encode(JSON.stringify(defaultState))}`),
     };
   };
 </script>

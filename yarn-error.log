@@ -23,7 +23,7 @@ Trace:
 
 npm manifest: 
   {
-  	"name": "stage-striker",
+  	"name": "stage-picker",
   	"version": "0.0.1",
   	"scripts": {
   		"dev": "svelte-kit dev",

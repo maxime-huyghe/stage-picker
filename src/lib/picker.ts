@@ -5,7 +5,7 @@ import { GENTLEMAN_STAGES } from "./stages";
 import { DEFAULT_RULESET, Phases, Player, type SelectionResult } from "./types";
 import { base64Decode, base64Encode } from "./utils";
 
-export const Striker = object({
+export const Picker = object({
   phases: Phases,
   bestOf: optional(number()),
   gentlemanStages: array(string()),
@@ -14,10 +14,10 @@ export const Striker = object({
   rpsWinner: optional(Player),
 });
 
-export type Striker = Infer<typeof Striker>;
+export type Picker = Infer<typeof Picker>;
 
-function createStrikerState() {
-  const store: Writable<Striker> = writable({
+function createPickerState() {
+  const store: Writable<Picker> = writable({
     phases: [...DEFAULT_RULESET],
     bestOf: undefined,
     gentlemanStages: [...GENTLEMAN_STAGES],
@@ -26,7 +26,7 @@ function createStrikerState() {
     rpsWinner: undefined,
   });
 
-  const update = (fun: (as: Striker) => Striker) => {
+  const update = (fun: (as: Picker) => Picker) => {
     const newState = fun(get(store));
     store.set(newState);
     goto(`${base64Encode(JSON.stringify(newState))}`);
@@ -37,7 +37,7 @@ function createStrikerState() {
     setFromBase64: (b64: string) => {
       const json = base64Decode(b64);
       const object: unknown = JSON.parse(json);
-      assert(object, Striker);
+      assert(object, Picker);
       store.set(object);
     },
     pickedBo: (bo: number) => update(s => advanceToNextPhase(s, { bestOf: bo })),
@@ -51,13 +51,13 @@ function createStrikerState() {
   };
 }
 
-export const striker = createStrikerState();
+export const picker = createPickerState();
 
 function advanceToNextPhase(
-  current: Striker,
-  newProperties: Partial<Omit<Striker, "phases">>,
+  current: Picker,
+  newProperties: Partial<Omit<Picker, "phases">>,
   newPhases?: Phases,
-): Striker {
+): Picker {
   let { phases } = current;
   if (phases[0].type === "restOfPickBansAndWinnerPicks" && !get(someoneWon)) {
     phases = [{ type: "pickWinner" }, ...phases];
@@ -75,15 +75,15 @@ function rest<T>(arr: T[]): T[] {
   return arr.slice(1);
 }
 
-export const lastWinner = derived(striker, $state =>
+export const lastWinner = derived(picker, $state =>
   $state.matchResults.length ? $state.matchResults.at(-1) : 1,
 );
 
-export const requiredWins = derived(striker, $state =>
+export const requiredWins = derived(picker, $state =>
   $state.bestOf ? Math.ceil($state.bestOf / 2) : Infinity,
 );
 
-export const matchesWonByPlayer = derived(striker, ({ matchResults }) =>
+export const matchesWonByPlayer = derived(picker, ({ matchResults }) =>
   matchResults.reduce((acc, cur) => ({ ...acc, [cur]: acc[cur] + 1 }), { 1: 0, 2: 0 }),
 );
 
