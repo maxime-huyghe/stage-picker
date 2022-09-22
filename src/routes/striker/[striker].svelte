@@ -26,7 +26,7 @@
 </script>
 
 <svelte:head>
-  <title>Stage Striker</title>
+  <title>Stage Picker</title>
 </svelte:head>
 
 <main class="flex flex-col items-center">
