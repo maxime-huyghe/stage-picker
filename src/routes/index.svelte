@@ -10,6 +10,7 @@
 
   export const load: Load = () => {
     const defaultState: Picker = {
+      initialPhases: [...DEFAULT_RULESET],
       phases: [...DEFAULT_RULESET],
       gentlemanStages: [...GENTLEMAN_STAGES],
       matchResults: [],

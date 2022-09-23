@@ -6,6 +6,8 @@ import { DEFAULT_RULESET, Phases, Player, type SelectionResult } from "./types";
 import { base64Decode, base64Encode } from "./utils";
 
 export const Picker = object({
+  // For resetting purposes.
+  initialPhases: Phases,
   phases: Phases,
   bestOf: optional(number()),
   gentlemanStages: array(string()),
@@ -18,6 +20,7 @@ export type Picker = Infer<typeof Picker>;
 
 function createPickerState() {
   const store: Writable<Picker> = writable({
+    initialPhases: [...DEFAULT_RULESET],
     phases: [...DEFAULT_RULESET],
     bestOf: undefined,
     gentlemanStages: [...GENTLEMAN_STAGES],
@@ -48,10 +51,24 @@ function createPickerState() {
       update(s => advanceToNextPhase(s, { gentlemanStages: selection.picked })),
     pickedStage: (selection: SelectionResult) =>
       update(s => advanceToNextPhase(s, { currentStage: selection.picked[0] })),
+    reset: () =>
+      update(picker => ({
+        initialPhases: picker.initialPhases,
+        phases: picker.initialPhases,
+        gentlemanStages: [],
+        matchResults: [],
+      })),
   };
 }
 
 export const picker = createPickerState();
+
+// Used to determine whether to display the reset button or not.
+export const pickerChangedFromInitial = derived(
+  picker,
+  // Comparing the length is enough as the phases array always gets shorter when it changes.
+  $state => $state.initialPhases.length !== $state.phases.length,
+);
 
 function advanceToNextPhase(
   current: Picker,
