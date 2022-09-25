@@ -1,9 +1,11 @@
 <script lang="ts">
-  import Button from "./Button.svelte";
+  import BigButton from "./BigButton.svelte";
   import { picker } from "./picker";
 </script>
 
-<div class="text-2xl">Set type?</div>
+<h2 class="text-4xl font-semibold mb-4">Set type?</h2>
 
-<Button on:click={() => picker.pickedBo(3)}>BO3</Button>
-<Button on:click={() => picker.pickedBo(5)}>BO5</Button>
+<div class="flex flex-col flex-1 w-full">
+  <BigButton on:click={() => picker.pickedBo(3)}>BO3</BigButton>
+  <BigButton on:click={() => picker.pickedBo(5)}>BO5</BigButton>
+</div>

@@ -5,9 +5,9 @@
 </script>
 
 <div class="h-screen flex flex-col justify-between items-center">
-  <div class="flex flex-col justify-start">
-    <nav class="flex justify-center p-4">
-      <h1 class="text-4xl font-extrabold">Smash Stage Picker</h1>
+  <div class="flex flex-col flex-1">
+    <nav class="p-4">
+      <h1 class="text-4xl font-extrabold text-center">Smash Stage Picker</h1>
     </nav>
 
     <slot />

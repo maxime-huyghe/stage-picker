@@ -32,7 +32,7 @@
   <title>Stage Picker</title>
 </svelte:head>
 
-<main class="flex flex-col items-center">
+<main class="flex flex-col items-center flex-1">
   {#if firstPhase && !$someoneWon}
     {#if firstPhase.type === "pickBO"}
       <BoPicker />
